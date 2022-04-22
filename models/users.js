@@ -10,17 +10,12 @@ const UserSchema = mongoose.Schema({
   phone: { type: String, required: true },
   email: { type: String, required: true },
   cin : { type: String, required: true},
-  date_in:{ type: String, required: false},
-  date_out:{ type: String, required: false},
-  job_title:{ type: String, required: true},
-  department: { type:String, required: true},
   password: { type: String, required: true },
   type: {
     type: String,
-    enum: ["admin", "user"],
+    enum: ["admin", "user","client"],
     default: "user",
   },
-  leaves_left: { type: Number, required: true, default: 40 },
 });
 
 //Pre Save Hook. Used to hash the password

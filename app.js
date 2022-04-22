@@ -5,11 +5,13 @@ const cors = require('cors');
 const app = express();
 const path = require('path');
 var passport = require('passport')
-
+require('dotenv').config();
 const UserRouter = require('./routes/user');
-
+const ProjectRouter = require('./routes/project');
+const TaskRouter = require('./routes/task');
+const ChatRouter = require('./routes/chat');
 //connecting to database
-mongoose.connect('mongodb+srv://root:root@cluster0.xe2ma.mongodb.net/CLS-RH', {
+mongoose.connect(process.env.DATABASE, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
@@ -17,17 +19,13 @@ mongoose.connect('mongodb+srv://root:root@cluster0.xe2ma.mongodb.net/CLS-RH', {
   .catch(() => console.log('Connection failed to MongoDB !'));
 
 app.use(bodyParser.json());
-
-
-
-
 // CORS Middleware
 app.use(cors());
 app.use(express.static(path.join(__dirname, '/')));
 app.use(passport.initialize());
-//app.use(passport.session());
-require('./config/passport')(passport)
 app.use('/api/user', UserRouter);
-
+app.use('/api/project', ProjectRouter);
+app.use('/api/task', TaskRouter);
+app.use('/api/chat', ChatRouter);
 
 module.exports = app;
